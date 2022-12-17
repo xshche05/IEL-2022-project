@@ -1,0 +1,74 @@
+\section{Příklad 5}
+% Jako parametr zadejte skupinu (A-H)
+\patyZadani{E}
+\makebox[\linewidth]{\rule{\textwidth}{0.5pt}}
+\subsection{Řešení}
+Sestavíme rovnici pro $i_L$:
+\begin{gather*}
+i'_L = \frac{U_L}{L}
+\end{gather*}
+Vyjádříme napětí $U_L$:
+\begin{gather*}
+U_L = U - U_R
+\end{gather*}
+Upravíme rovnici:
+\begin{gather*}
+i'_L = \frac{U-U_R}{L}\\
+i_R = i_L \\
+U_R = R * i_L\\
+i'_L = \frac{U-R * i_L}{L}
+\end{gather*}
+Sestavíme rovnici napětí v obvodu:
+\begin{gather*}
+L * i'_L + R * i_L = U\\
+30i'_L + 40i_L = 50
+\end{gather*}
+Obecný tvar pro cívku:
+\begin{gather*}
+i_L(t)=K(t) * e^{\lambda t}
+\end{gather*}
+Nemáme pro rovnice $\lambda$ a $K(t)$. Nejprve zjistíme $\lambda$:
+\begin{gather*}
+L\lambda+R = 0 \\
+\lambda = -\frac{R}{L} = -\frac{40}{30} = -\frac{4}{3}
+\end{gather*}
+Teď pomoci $\lambda$ zjistíme $K(t)$:
+\begin{gather*}
+i_L(t) = K(t) * e^{\lambda t} \\
+i_L(t) = K(t) * e^{-\frac{4}{3}t} \\
+i_L(t)' = K(t)' *  e^{-\frac{4}{3}t} - \frac{4}{3}K(t) * e^{-\frac{4}{3}t}
+\end{gather*}
+Spočítáme hodnotu $K(t)'$:
+\begin{gather*}
+30 * (K(t)' *  e^{-\frac{4}{3}t} - \frac{4}{3}K(t) * e^{-\frac{4}{3}t}) + 40 * (K(t) * e^{-\frac{4}{3}t}) = 50 \\
+30K(t)'e^{-\frac{4}{3}t} - 40K(t)e^{-\frac{4}{3}t} + 40K(t)e^{-\frac{4}{3}t} = 50 \\
+30K(t)'e^{-\frac{4}{3}t} = 50 \\
+K(t)' = \frac{5}{3}e^{\frac{4}{3}t}
+\end{gather*}
+Spočítáme hodnotu $K(t)$:
+\begin{gather*}
+K(t) = \int \frac{5}{3}e^{\frac{4}{3}t}dt \\
+K(t) = \frac{5}{4}e^{\frac{4}{3}t} + C
+\end{gather*}
+Spočítáme hodnotu $C$, když máme $t=0$:
+\begin{gather*}
+i_L(t) = (\frac{5}{4}e^{\frac{4}{3}t} + C) * e^{-\frac{4}{3}t} \\
+i_L(t) = \frac{5}{4} + Ce^{-\frac{4}{3}t} \\
+i_L(0) = \frac{5}{4} + C \\
+10 = \frac{5}{4} + C \\
+C = 10 - \frac{5}{4} = \frac{35}{4} = 8.75
+\end{gather*}
+\subsection{Výsledky}
+Konečná rovnice má tvar:
+\begin{gather*}
+i_L(t) = 1.25+8.75e^{-\frac{4}{3}t}
+\end{gather*}
+\subsection{Kontrola}
+\begin{gather*}
+i_L(t)' = \frac{5}{3} * e^{\frac{4}{3}t} * e^{-\frac{4}{3}t} - \frac{4}{3}\left(\frac{5}{4}e^{\frac{4}{3}t} + \frac{35}{4}\right) e^{-\frac{4}{3}t} \\
+i_L = \frac{5}{4}+\frac{35}{4}e^{-\frac{4}{3}t} \\
+30i'_L + 40i_L = 50 \\
+30\left(\frac{5}{3} * e^{\frac{4}{3}t} * e^{-\frac{4}{3}t} - \frac{4}{3}\left(\frac{5}{4}e^{\frac{4}{3}t} + \frac{35}{4}\right)e^{-\frac{4}{3}t}\right) + 40\left(\frac{5}{4}+\frac{35}{4}e^{-\frac{4}{3}t}\right) = 50 \\
+50 - 50 - 35e^{-\frac{4}{3}} + 50 + 35e^{-\frac{4}{3}} = 50 \\
+\boldsymbol{50 = 50}
+\end{gather*}

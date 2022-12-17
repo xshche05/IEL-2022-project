@@ -1,0 +1,106 @@
+\section{Příklad 4}
+% Jako parametr zadejte skupinu (A-H)
+\ctvrtyZadani{A}
+\makebox[\linewidth]{\rule{\textwidth}{0.5pt}}
+\subsection{Řešení}
+Určíme směr proudu pro každou smyčku, určíme proudy $I_A$, $I_B$, $I_C$ a jích směr:
+\begin{center}
+\begin{circuitikz}[european resistors]
+\draw
+(0, 4) to[sV>=$u_1$, invert] (6, 4) to (6, 0)
+(0, 4) to[R=$R_1$, -*] (0, 2)
+to [L, label = $L_1$] (2, 2)
+to [R=$R_2$] (4, 2)
+to [L, label = $L_2$, *-*] (6, 2)
+(6, 0) to[sV>=$u_2$, -*] (4, 0)
+(4, 0) to[C=$C_1$] (4, 2)
+(4, 0) to[C=$C_2$, v>=$ $] (0, 0) to (0, 2)
+(4, 0) to[short, i=$i_{C_2}$] (1.5, 0)
+(3,3) node[circulator,scale=0.6]{}
+(2,1) node[circulator,scale=0.6]{}
+(5,1) node[circulator,scale=0.6]{}
+[anchor=south west]
+(3.1,3) node{$I_{A}$}
+(2.1,1) node{$I_{B}$}
+(5.1,1) node {$I_{C}$}
+;
+\end{circuitikz}
+\end{center}
+Spočítáme hodnoty impedance pro cívky a kondenzátory:
+\begin{gather*}
+\omega = 2\pi f = 2*\pi*70 = 140\pi = 439.8230 Rad \\
+Z_{C_1} = \frac{-j}{\omega C_1} = \frac{-j}{439.8230 * 200*10^{-6}} = -11.3682j \Omega\\
+Z_{C_2} = \frac{-j}{\omega C_2} = \frac{-j}{439.8230 * 105*10^{-6}} = -21.6537j \Omega\\
+Z_{L_1} = j \omega L_1 = j * 439.8230 * 120 * 10^{-3} = 52.7788j \Omega\\
+Z_{L_2} = j \omega L_2 = j * 439.8230 * 100 * 10^{-3} = 43.9823j \Omega\\
+\end{gather*}
+Spočítáme napětí $u_1$ a $u_2$:
+\begin{gather*}
+u_1 = U_1 * \sin{(2\pi ft)} = U_1 * \sin{(2\pi f * \frac{\pi}{4 \pi f})} = U_1 * \sin{(\frac{\pi}{2})} = U_1 * 1 = 3\Vo\\
+u_2 = U_2 * \sin{(2\pi ft)} = U_2 * \sin{(2\pi f * \frac{\pi}{4 \pi f})} = U_2 * \sin{(\frac{\pi}{2})} = U_2 * 1 = 5\Vo
+\end{gather*}
+Dle II. Kirchhoffova zákona zapíšeme pro každou smyčku rovnice pro napětí, dále dostaneme soustavu rovnic pro napětí ve smyčkách:
+\begin{gather*}
+I_A: \quad U_{L_2} + U_{R_2} + U_{L_1} + U_{R_1} + u_1 = 0 \\
+I_B: \quad U_{C_1} + U_{C_2} + U_{L_1} + U_{R_2} = 0 \\
+I_C: \quad u_2 + U_{C_1} + U_{L_2} = 0
+\end{gather*}
+Určíme napětí přes proud a odpor:
+\begin{gather*}
+I_A: \quad I_A*(Z_{L_2} + R_2 + Z_{L_1} + R_1) - I_B*(Z_{L_1} + R_2) - I_C*(Z_{L_2}) = -u_1\\
+I_B: \quad -I_A*(Z_{L_1} + R_2) + I_B*(Z_{C_1} + Z_{C_2} + Z_{L_1} + R_2) - I_C*(Z_{C_1}) = 0\\
+I_C: \quad -I_A*(Z_{L_2}) - I_B*(Z_{C_1}) + I_C*(Z_{L_2} + Z_{C_1}) = -u_2
+\end{gather*}
+Matice pro výpočet proudů v každou smyčce: 
+\begin{gather*}
+\begin{pmatrix}
+Z_{L_2}+R_2+Z_{L_1}+R_1 & -Z_{L_1}-R_2 & -Z_{L_2} \\
+-Z_{L_1}-R_2 & Z_{C_1}+Z_{C_2}+Z_{L_1}+R_2 & -Z_{C_1} \\
+-Z_{L_2} & -Z_{C_1} & Z_{L_2}+Z_{C_1}
+\end{pmatrix}
+\times
+\begin{pmatrix}
+I_A\\
+I_B\\
+I_C
+\end{pmatrix}
+=
+\begin{pmatrix}
+-u_1\\
+0\\
+-u_2
+\end{pmatrix}
+\end{gather*}
+Spočítáme hodnoty proudů v každou smyčce:
+\begin{gather*}
+\begin{pmatrix}
+26.0000+96.7611j & -14.0000-52.7788j & -43.9823 \\
+-14.0000-52.7788j & 14.0000+19.7568j & 11.3682 \\
+-43.9823 & 11.3682 & 32.6141
+\end{pmatrix}
+\times
+\begin{pmatrix}
+I_A\\
+I_B\\
+I_C
+\end{pmatrix}
+=
+\begin{pmatrix}
+-3\\
+0\\
+-5
+\end{pmatrix}
+\end{gather*}
+\begin{gather*}
+I_A = (-0.1025 - 0.1024j) \Am \\
+I_B = (-0.0568 - 0.3126j) \Am \\
+I_C = (-0.1185 + 0.1242j) \Am
+\end{gather*}
+\subsection{Výsledky}
+Spočítáme proud $i_{C_2}$, napětí $|U_{C_{2}}|$ a fázový posun $\varphi_{C_{2}}$:
+\begin{gather*}
+i_{C_2} = I_B = (-0.0568 - 0.3126j) \Am \\
+U_{C_{2}} = i_{C_2} * Z_{C_2} = (-0.0568 - 0.3126j) * (-21.6537j) = (-6.7697 + 1.2291j) \Vo \\
+|U_{C_{2}}| = \sqrt{Re(U_{C_{2}})^2 + Im(U_{C_{2}})^2} = \sqrt{(-6.7697)^2 + (1.2291)^2} = 6.8804 \Vo \\
+\varphi_{C_{2}} = \arctan(\frac{Im(U_{C_2})}{Re(U_{C_2})}) + \pi = \arctan(\frac{1.2291}{-6.7697}) + \pi = 2.9620 Rad = 169.7093^{\circ}
+\end{gather*}

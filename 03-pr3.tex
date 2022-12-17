@@ -1,0 +1,63 @@
+\section{Příklad 3}
+% Jako parametr zadejte skupinu (A-H)
+\tretiZadani{C}
+\makebox[\linewidth]{\rule{\textwidth}{0.5pt}}
+\subsection{Řešení}
+Dle II. Kirchhoffova zákona zapíšeme rovnice pro uzly $A$ (začátek napětí $U_A$), $B$ (začátek napětí $U_B$), $C$ (začátek napětí $U_C$):
+\begin{gather*}
+A: \quad I_{R_1} - I_{R_2} - I_{R_3} = 0\\
+B: \quad I_{R_2} - I_{R_4} - I_2 = 0\\
+C: \quad I_{R_4} + I_2 - I_1 - I_{R_5} = 0
+\end{gather*}
+Spočítáme proudy pro každý rezistor s napětími $U_A, U_B, U_C$:
+\begin{gather*}
+I_{R_1} = \frac{U-U_{A}}{R_{1}} \\
+I_{R_2} = \frac{U_{A}-U_{B}}{R_{2}} \\
+I_{R_3} = \frac{U_{A}}{R_{3}} \\
+I_{R_4} = \frac{U_{B}-U_{C}}{R_{4}}\\
+I_{R_5} = \frac{U_{C}}{R_{5}}
+\end{gather*}
+Dostaneme rovnice pro každý uzel, kde proud je vyjádřen napětím a odporem:
+\begin{gather*}
+A: \quad \frac{110-U_{A}}{44} - \frac{U_{A}-U_{B}}{31} - \frac{U_{A}}{56} = 0 \\
+B: \quad \frac{U_{A}-U_{B}}{31} - \frac{U_{B}-U_{C}}{20} - 0.75 = 0 \\
+C: \quad \frac{U_{B}-U_{C}}{20} + 0.75 - 0.85 - \frac{U_{C}}{30} = 0
+\end{gather*}
+Vyneseme koeficienty za závorky:
+\begin{gather*}
+A: \quad -U_A * \frac{92}{1263} + U_B * \frac{1}{31} = -2.5 \\
+B: \quad U_A * \frac{1}{31} - U_B * \frac{51}{620} + U_C * \frac{1}{20} = 0.75\\
+C: \quad U_B * \frac{1}{20} - U_C * \frac{1}{12} = 0.1
+\end{gather*}
+Zapíšeme soustavu rovnic do matice a spočítáme hodnoty $U_A$, $U_B$, $U_C$:
+\begin{gather*}
+\begin{pmatrix}
+-\frac{92}{1263} & \frac{1}{31} & 0\\
+\frac{1}{31} & -\frac{51}{620} & \frac{1}{20}\\
+0 & \frac{1}{20} & -\frac{1}{12}
+\end{pmatrix}
+\times
+\begin{pmatrix}
+U_A\\
+U_B\\
+U_C
+\end{pmatrix}
+=
+\begin{pmatrix}
+-2.5\\
+0.75\\
+0.1
+\end{pmatrix}
+\end{gather*}
+\begin{gather*}
+U_A = 37.7857 \Vo\\
+U_B = 7.8245 \Vo\\
+U_C = 3.4947 \Vo
+\end{gather*}
+\noindent
+\subsection{Výsledky}
+Vypočítáme si $U_{R_4}$, a pak dopočítáme proud $I_{R_4}$:
+\begin{gather*}
+U_{R_4} = U_B - U_C = 7.8245 - 3.4947 = 4.3298 \Vo \\
+I_{R_4} = \frac{U_{R_4}}{R_4} = \frac{4.3298}{20} = 0.2165 \Am
+\end{gather*}

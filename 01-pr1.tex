@@ -1,0 +1,120 @@
+\section{Příklad 1}
+% Jako parametr zadejte skupinu (A-H)
+\prvniZadani{A}
+\makebox[\linewidth]{\rule{\textwidth}{0.5pt}}
+\subsection{Řešení}
+Nejprve tedy můžeme zjednodušit rezistory $R_6$ a $R_8$, jsou zapojeny sériově, a zároveň sloučit zdroje napětí $U_1$ a $U_2$. Po zjednodušení bude v obvodu rezistor, který nazveme $R_{68}$ a jediný zdroj napětí $U_{12}$:
+\begin{gather*}
+R_{68} = R_6 + R_8 = 750 + 190 = 940 \Omega \\
+U_{12} = U_1 + U_2 = 80 + 120 = 200 \Vo
+\end{gather*}
+\begin{center}
+\begin{circuitikz}[european resistors, american voltages]
+\draw
+(0,3) to[V_=$U_{12}$] (0,-1)
+(0,3) to[R=$R_1$] (3,3) -- (3,1) --
+(3,4) to[R=$R_2$] (6,4) -- (6,3)
+(3,3) to[R=$R_3$, *-*] (6,3)
+(3,1) to[R=$R_4$] (6,1)
+(6,3) to[R=$R_5$, -*] (6,1)
+(6,1) to[R=$R_7$, -*] (9,1)
+(6,3) to[R=$R_{68}$] (9,3) -- (9, -1)
+(9, -1) -- (0, -1)
+(3, 3.3) node[anchor=east] {A}
+(6, 3.3) node[anchor=west] {B}
+(9, 1) node[anchor=west] {C}
+;
+\end{circuitikz}
+\end{center}
+ Teď nemůžeme jednoznačně určit, jak jsou rezistory $R_4$, $R_5$ a $R_7$ zapojeny. Abychom jsme mohli to jednoznačně určit, musíme provést transformace. Povedeme transformace Hvězda $\to$ Trojúhelník a dostaneme nový obvod:
+\begin{gather*}
+R_{AB} = R_4 + R_5 + \frac{R_4 * R_5}{R_7} = 130 + 360 + \frac{130 * 360}{310} \approx 640.9677 \Omega \\
+R_{AC} = R_4 + R_7 + \frac{R_4 * R_7}{R_5} = 130 + 310 + \frac{130 * 310}{360} \approx 551.9444 \Omega \\
+R_{BC} = R_5 + R_7 + \frac{R_5 * R_7}{R_4} = 360 + 310 + \frac{360 * 310}{130} \approx 1528.4615 \Omega
+\end{gather*}
+\begin{center}
+\begin{circuitikz}[european resistors, american voltages]
+\draw
+(0,3) to[V_=$U_{12}$] (0,-1)
+(0,3) to[R=$R_1$] (3,3) -- (3,1) --
+(3,4) to[R=$R_2$] (6,4) -- (6,2)
+(3,3) to[R=$R_3$, *-*] (6,3) -- (7,3) -- (7, 2.5) --
+(7, 3.5) to[R=$R_{68}$] (10, 3.5) -- (10, 2.5)
+(7, 2.5) to[R=$R_{BC}$] (10, 2.5)
+(10,3) -- (11, 3) -- (11, -1) -- (0, -1)
+(3,2) to[R=$R_{AB}$] (6,2)
+(3,1) to[R=$R_{AC}$, -*] (11,1)
+(3, 3.3) node[anchor=east] {A}
+(6, 3.3) node[anchor=west] {B}
+(11, 1) node[anchor=west] {C}
+;
+\end{circuitikz}
+\end{center}
+Rezistory $R_2$, $R_3$ a $R_{AB}$ jsou paralelně zapojeny, po zjednodušení bude v obvodu rezistor, který nazveme $R_{23AB}$. Zároveň $R_{68}$ a $R_{BC}$ jsou paralelně zapojeny, po zjednodušení bude v obvodu rezistor, který nazveme $R_{68BC}$. Po zjednodušení dostaneme nový obvod:
+\begin{gather*}
+R_{23AB} = \frac{1}{\frac{1}{R_{2}}+\frac{1}{R_{3}}+\frac{1}{R_{AB}}} = \frac{1}{\frac{1}{650}+\frac{1}{410}+\frac{1}{640.9677}} \approx 180.5828 \Omega\\
+R_{68BC} = \frac{1}{\frac{1}{R_{68}}+\frac{1}{R_{BC}}} = \frac{1}{\frac{1}{940}+\frac{1}{1528.4615}} \approx 582.0443 \Omega
+\end{gather*}
+\begin{center}
+\begin{circuitikz}[european resistors, american voltages]
+\draw
+(0,3) to[V_=$U_{12}$] (0,-1)
+(0,3) to[R=$R_1$] (3,3) -- (3,1) --
+(3,3) to[R=$R_{23AB}$, *-] (6,3)
+(6,3) to[R=$R_{68BC}$] (9,3) -- (9, -1) -- (0, -1)
+(3,1) to[R=$R_{AC}$, -*] (9,1)
+;
+\end{circuitikz}
+\end{center}
+Rezistory $R_{23AB}$ a $R_{68BC}$ jsou zapojeny sériově, po zjednodušení bude v obvodu rezistor, který nazveme $R_{23AB68BC}$. Po zjednodušení dostaneme nový obvod:
+\begin{gather*}
+R_{23AB68BC} = R_{23AB} + R_{68BC} = 180.5828 + 582.0443 = 762.6271 \Omega
+\end{gather*}
+\begin{center}
+\begin{circuitikz}[european resistors, american voltages]
+\draw
+(0,3) to[V_=$U_{12}$] (0,-1)
+(0,3) to[R=$R_1$] (3,3) -- (3,1) --
+(3,3) to[R=$R_{23AB68BC}$, *-] (6,3) -- (6, -1) -- (0, -1)
+(3,1) to[R=$R_{AC}$, -*] (6,1)
+;
+\end{circuitikz}
+\end{center}
+Rezistory $R_{23AB68BC}$ a $R_{AC}$ jsou zapojeny paralelně, po zjednodušení bude v obvodu rezistor, který nazveme $R_{23AB68BCAC}$. Po zjednodušení dostaneme nový obvod:\\
+\begin{gather*}
+R_{23AB68BCAC} = \frac{1}{\frac{1}{R_{23AB68BC}} + \frac{1}{R_{AC}}} = \frac{1}{\frac{1}{762.6271} + \frac{1}{551.9444}} \approx 320.2015 \Omega
+\end{gather*}
+\begin{center}
+\begin{circuitikz}[european resistors, american voltages]
+\draw
+(0,3) to[V_=$U_{12}$] (0,-1)
+(0,3) to[R=$R_1$] (3,3)
+(3,3) to[R=$R_{23AB68BCAC}$] (6,3) -- (6, -1) -- (0, -1)
+;
+\end{circuitikz}
+\end{center}
+Rezistory $R_{1}$ a $R_{23AB68BCAC}$ jsou zapojeny sériově, po zjednodušení bude v obvodu rezistor, který nazveme $R_{EKV}$. Po zjednodušení dostaneme nový obvod:
+\begin{gather*}
+R_{EKV} = R_1 + R_{23AB68BCAC} = 350 + 320.2015 = 670.2015 \Omega
+\end{gather*}
+\begin{center}
+\begin{circuitikz}[european resistors, american voltages]
+\draw
+(0,3) to[V_=$U_{12}$] (0,0)
+(0,3) to[R=$R_{EKV}$] (2,3) -- (2, 0) -- (0, 0)
+;
+\end{circuitikz}
+\end{center}
+Teď můžeme spočítat celkový proud $I$:
+\begin{gather*}
+I = \frac{U_i}{R_{EKV}} = \frac{200}{670.2015} \approx 0.2984 \Am
+\end{gather*}
+Nyní zpětně spočítáme $U_{R_2}$ a $I_{R_2}$:
+\subsection{Výsledky}
+\begin{gather*}
+U_{R_{23AB68BCAC}} = \frac{R_{23AB68BCAC}}{R_{23AB68BCAC} + R_1} * U_{12} = \frac{320.2015}{320.2015 + 350} * 200 \approx 95.5538 \Vo \\
+U_{R_{23AB68BC}} = U_{R_{23AB68BCAC}} = 95.5538 \Vo \\
+U_{R_{23AB}} = \frac{R_{23AB}}{R_{23AB}+R_{68BC}} * U_{R_{23AB68BC}} = \frac{180.5828}{180.5828+582.0443} * 95.5538 \approx 22.6262 \Vo \\
+U_{R_2} = U_{R_{23AB}} = 22.6262 \Vo \\
+I_{R_2} = \frac{U_{R_2}}{R_2} = \frac{22.6262}{650} \approx 0.0348 \Am 
+\end{gather*}
